@@ -1,0 +1,2 @@
+ciao(ciao).ciao(miao).
+scelta(X):-ciao(X).

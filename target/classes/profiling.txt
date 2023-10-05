@@ -1,0 +1,4 @@
+
+scelta(conservativo):-budget(X),X<10000.
+scelta(furioso):-budget(X),X>17000.
+scelta(normale):-budget(X),X>=10000,X<=17000.

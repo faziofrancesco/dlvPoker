@@ -1,0 +1,28 @@
+        driver.findElement(By.xpath("//div[@class='action-buttons']/button[1]")).click();
+
+<button class="action-button">Raise</button>  //raise
+<button class="fold-button">Fold</button>   //fold
+<button class="action-button">Check</button>  //check
+<button class="action-button">Bet</button>   //bet
+<button class="action-button">All-In!</button> //all in
+
+-Sapere pot attuale
+ String pot= driver.findElement(By.xpath("//div[@class='pot-container']/h4")).getText();
+
+-Sapere se è il mio turno di giocare
+myTurn=(driver.findElements( By.xpath("//button[@class='action-button']") ).size()!=0);
+
+-Sapere se il turno è finito
+boolean endTurn=(driver.findElements( By.xpath("//button[@class='showdown--nextRound--button']") ).size()==1);
+
+//sintassi per sapere se qualcosa è attivo
+ boolean textBox = driver.findElement(By.xpath("//input[@name='textbox1']")).isEnabled();
+
+//accedere alla barra di scelta dei soldi
+WebContent slider= (driver.findElement(By.xpath("//div[@class='slider-handles']/div"))
+
+Per andare al turno successivo:
+<button class="showdown--nextRound--button"> Next Round </button>
+
+-Sapere Budget attuale
+ String pot= driver.findElement(By.xpath("//div[@class='player-info--stash--container']/h5")).getText();

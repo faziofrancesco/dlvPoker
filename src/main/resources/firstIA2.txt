@@ -1,0 +1,8 @@
+decisione(fold). decisione(call). decisione(raise).
+scelta(X)| notScelta(X):-decisione(X).
+:-not #count{X:scelta(X)}=1.
+:- not scelta(fold),puntataMinima(X),budget(Y),X>Y.
+:-scelta(fold),puntataMinima(X),X=0.
+:- not scelta(fold),#count{X:sceltaAvversario(X,raise)}>1,probabilitaVittoria(Z),Z<=80.
+:-scelta(raise),puntataMinima(X),budget(X).
+:-not scelta(raise),avversari(N),#count{X:sceltaAvversario(X,call)}=N,probabilitaVittoria(Z),Z>50.

@@ -1,0 +1,51 @@
+decisione(fold). decisione(call). decisione(raise).
+
+scelta(X)|notScelta(X):- decisione(X).
+
+%configurazione giocatore singolo
+%solo una scelta per volta
+:- not #count{X:scelta(X)}=1.
+
+%non e possibile che la scelta  sia fold  se la puntata minima e 0
+:-scelta(fold),puntataMinima(X),X=0.
+
+%non e possibile che la scelta sia raise se puntata minima=Budget
+:-scelta(raise),puntataMinima(X),budget(Y),X>=Y.
+
+%altri giocatori call
+
+:-scelta(X),X=call,avversari(Y),Y=1,probabilitaVittoria(Z),Z<49,puntataMinima(K),K!=0.
+:-scelta(X),X=call,avversari(Y),Y=2,probabilitaVittoria(Z),Z<37,puntataMinima(K),K!=0.
+:-scelta(X),X=call,avversari(Y),Y=3,probabilitaVittoria(Z),Z<25,puntataMinima(K),K!=0.
+:-scelta(X),X=call,avversari(Y),Y=4,probabilitaVittoria(Z),Z<20,puntataMinima(K),K!=0.
+
+%altri giocatori raise
+
+:-scelta(X),X=raise,avversari(Y),Y=1,probabilitaVittoria(Z),Z<60,puntataMinima(K),K!=0.
+:-scelta(X),X=raise,avversari(Y),Y=2,probabilitaVittoria(Z),Z<45,puntataMinima(K),K!=0.
+:-scelta(X),X=raise,avversari(Y),Y=3,probabilitaVittoria(Z),Z<32,puntataMinima(K),K!=0.
+:-scelta(X),X=raise,avversari(Y),Y=4,probabilitaVittoria(Z),Z<25,puntataMinima(K),K!=0.
+
+:-notScelta(X),X=fold,avversari(Y),Y=1,puntataMinima(K),K>300,probabilitaVittoria(Z),Z<50.
+:-notScelta(X),X=fold,avversari(Y),Y=2,puntataMinima(K),K>300,probabilitaVittoria(Z),Z<33.
+:-notScelta(X),X=fold,avversari(Y),Y=3,puntataMinima(K),K>300,probabilitaVittoria(Z),Z<25.
+:-notScelta(X),X=fold,avversari(Y),Y=4,puntataMinima(K),K>300,probabilitaVittoria(Z),Z<19.
+
+%se la scelta non e raise  pago prob@1 per ogni X ma  prob deve essere maggiore del 60
+:~notScelta(X),X=raise,avversari(Y),Y=1,probabilitaVittoria(Z),Z>=60.[Z@1,X]
+:~notScelta(X),X=raise,avversari(Y),Y=2,probabilitaVittoria(Z),Z>=45.[Z@1,X]
+:~notScelta(X),X=raise,avversari(Y),Y=3,probabilitaVittoria(Z),Z>=32.[Z@1,X]
+:~notScelta(X),X=raise,avversari(Y),Y=4,probabilitaVittoria(Z),Z>=25.[Z@1,X]
+
+%se la scelta non e call pago 1@1 per ogni X
+:~notScelta(X),X=call,avversari(Y),Y=1.[50@1,X]
+:~notScelta(X),X=call,avversari(Y),Y=2.[40@1,X]
+:~notScelta(X),X=call,avversari(Y),Y=3.[25@1,X]
+:~notScelta(X),X=call,avversari(Y),Y=4.[18@1,X]
+
+%se noi scegliamo fold paghiamo per la probabilita di perdità.
+:~notScelta(X),X=fold,avversari(Y),Y=1,probabilitaVittoria(Z),P=100-Z.[P@1,X]
+:~notScelta(X),X=fold,avversari(Y),Y=2,probabilitaVittoria(Z),P=100-Z.[P@1,X]
+:~notScelta(X),X=fold,avversari(Y),Y=3,probabilitaVittoria(Z),P=100-Z.[P@1,X]
+:~notScelta(X),X=fold,avversari(Y),Y=4,probabilitaVittoria(Z),P=100-Z.[P@1,X]
+

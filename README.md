@@ -1,2 +1,1 @@
-# dlvPoker
-PokerTexasHoldem AI Project
+# TexasHoldemDLV
